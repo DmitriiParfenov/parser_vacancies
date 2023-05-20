@@ -56,3 +56,10 @@ def test_vacancy_validate_data_2(vacancies_examples):
     for elem in vacancies_examples:
         result.append(isinstance(elem, Vacancy))
     assert result == [True, True, True, True, True]
+
+
+def test_vacancy_get_id(vacancies_examples):
+    result = []
+    for elem in vacancies_examples:
+        result.append(elem.id)
+    assert result == [1, 2, 3, 4, 5]
