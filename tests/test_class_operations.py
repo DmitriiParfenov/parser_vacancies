@@ -105,7 +105,8 @@ def test_vacancy_method__eq__1(vacancies_examples, expected, inner_index, argume
         vacancies_examples[inner_index] == argument
 
 
-@pytest.mark.parametrize("index_1, index_2, expected", [(0, 1, False), (4, 3, True), (2, 3, False), (3, 4, True)])
+@pytest.mark.parametrize("index_1, index_2, expected", [(0, 1, False), (4, 3, True), (2, 3, False),
+                                                        (3, 4, True), (2, 2, True)])
 def test_vacancy_method__eq__2(vacancies_examples, index_1, index_2, expected):
     assert (vacancies_examples[index_1] == vacancies_examples[index_2]) == expected
 
