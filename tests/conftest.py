@@ -3,6 +3,7 @@ from datetime import datetime as dt
 import pytest
 
 from utils.class_operations import Vacancy
+from utils.db_operation import CSVSaver
 
 
 @pytest.fixture
@@ -19,3 +20,8 @@ def vacancies_examples():
                          'Описание_5', 'Pipelines', 'Более 6 лет', dt(2023, 1, 5))
                  ]
     return vacancies
+
+
+@pytest.fixture
+def get_instance_saver():
+    return CSVSaver()
