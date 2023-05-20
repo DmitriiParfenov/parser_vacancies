@@ -248,3 +248,8 @@ def test_get_vacancy_by_date(get_instance_saver, get_file_with_data):
     for item in vac:
         result.append(item.get('Идентификатор'))
     assert result == ['5', '4', '3', '2', '1']
+
+
+def test_get_vacancy_by_date_from_empty_file(get_instance_saver, get_empty_file):
+    vac = get_instance_saver.get_vacancy_by_date()
+    assert vac == 'В базе данных еще нет ни одной вакансии'
