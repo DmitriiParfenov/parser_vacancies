@@ -240,3 +240,11 @@ def test_get_vacancy_by_filtered_words_not_in_title_by_date(get_instance_saver, 
 def test_get_vacancy_by_filtered_words_not_in_title_from_empty_file(get_instance_saver, get_empty_file):
     vac = get_instance_saver.get_vacancy_by_filtered_words_not_in_title(10000, False, 'Санкт-Петербург')
     assert vac == 'В базе данных еще нет ни одной вакансии'
+
+
+def test_get_vacancy_by_date(get_instance_saver, get_file_with_data):
+    vac = get_instance_saver.get_vacancy_by_date()
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == ['5', '4', '3', '2', '1']
