@@ -63,3 +63,11 @@ def test_vacancy_get_id(vacancies_examples):
     for elem in vacancies_examples:
         result.append(elem.id)
     assert result == [1, 2, 3, 4, 5]
+
+
+def test_vacancy_get_url(vacancies_examples):
+    result = []
+    for elem in vacancies_examples:
+        result.append(elem.url)
+    assert result == ['https://example1.ru/', 'https://example2.ru/', 'https://example3.ru/', 'https://example4.ru/',
+                      'https://example5.ru/']
