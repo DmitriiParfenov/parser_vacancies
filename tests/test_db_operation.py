@@ -103,3 +103,13 @@ def test_get_vacancies_by_city(get_instance_saver, get_file_with_data, argument,
     for item in vac:
         result.append(item.get('Идентификатор'))
     assert result == expected
+
+
+@pytest.mark.parametrize("arg1, arg2, expected", [('Санкт-Петербург', True, ['5', '1']), ('Воронеж', True, ['4', '3']),
+                                                ('Санкт-Петербург', False, ['1', '5']), ('Воронеж', False, ['3', '4'])])
+def test_get_vacancies_by_city_and_date(get_instance_saver, get_file_with_data, arg1, arg2, expected):
+    vac = get_instance_saver.get_vacancies_by_city(arg1, arg2)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
