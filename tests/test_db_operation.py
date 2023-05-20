@@ -63,3 +63,8 @@ def test_get_vacancies_by_salary_and_date(vacancies_examples, get_instance_saver
     for item in vac:
         result.append(item.get('Идентификатор'))
     assert result == expected
+
+
+def test_get_vacancies_by_salary_with_no_data(get_instance_saver, get_empty_file):
+    vac = get_instance_saver.get_vacancies_by_salary(50000)
+    assert vac == 'В базе данных еще нет ни одной вакансии'
