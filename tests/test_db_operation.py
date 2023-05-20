@@ -96,7 +96,7 @@ def test_get_vacancies_by_experience_from_empty_file(get_instance_saver, get_emp
 
 
 @pytest.mark.parametrize("argument, expected", [('Санкт-Петербург', ['1', '5']), ('Воронеж', ['3', '4']),
-                                                ('Москва', ['2'])])
+                                                ('москва', ['2'])])
 def test_get_vacancies_by_city(get_instance_saver, get_file_with_data, argument, expected):
     vac = get_instance_saver.get_vacancies_by_city(argument)
     result = list()
@@ -105,11 +105,17 @@ def test_get_vacancies_by_city(get_instance_saver, get_file_with_data, argument,
     assert result == expected
 
 
-@pytest.mark.parametrize("arg1, arg2, expected", [('Санкт-Петербург', True, ['5', '1']), ('Воронеж', True, ['4', '3']),
-                                                ('Санкт-Петербург', False, ['1', '5']), ('Воронеж', False, ['3', '4'])])
+@pytest.mark.parametrize("arg1, arg2, expected", [('Санкт-Петербург', True, ['5', '1']), ('воронеж', True, ['4', '3']),
+                                                  ('Санкт-Петербург', False, ['1', '5']),
+                                                  ('Воронеж', False, ['3', '4'])])
 def test_get_vacancies_by_city_and_date(get_instance_saver, get_file_with_data, arg1, arg2, expected):
     vac = get_instance_saver.get_vacancies_by_city(arg1, arg2)
     result = list()
     for item in vac:
         result.append(item.get('Идентификатор'))
     assert result == expected
+
+
+def test_get_vacancies_by_city_from_empty_file(get_instance_saver, get_empty_file):
+    vac = get_instance_saver.get_vacancies_by_city('москва')
+    assert vac == 'В базе данных еще нет ни одной вакансии'
