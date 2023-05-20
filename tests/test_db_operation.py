@@ -253,3 +253,36 @@ def test_get_vacancy_by_date(get_instance_saver, get_file_with_data):
 def test_get_vacancy_by_date_from_empty_file(get_instance_saver, get_empty_file):
     vac = get_instance_saver.get_vacancy_by_date()
     assert vac == 'В базе данных еще нет ни одной вакансии'
+
+
+@pytest.mark.parametrize("arg_1, arg_2, arg_3, arg_4, expected",
+                         [('биоинформатик', 10000, 'Нет опыта работы', 'Санкт-Петербург', ['1']),
+                          ('менеджер', 10000, 'Нет опыта работы', 'Санкт-Петербург', []),
+                          ('биоинформатик', 250000, False, False, ['4', '5']),
+                          ('стажер', 100000, False, False, []),
+                          ('биоинформатик', False, 'Нет опыта работы', False, ['1']),
+                          ('менеджер', False, 'От 3 до 6 лет', False, ['3']),
+                          ('Ученый', False, 'Нет опыта работы', False, []),
+                          ('биоинформатик', 30000, False, 'Санкт-Петербург', ['1', '5']),
+                          ('менеджер', 30000, False, 'Воронеж', []),
+                          ('биоинформатик', 30000, False, 'Москва', ['2']),
+                          ('биоинформатик', False, False, 'Москва', ['2']),
+                          ('биоинформатик', False, False, 'Воронеж', ['4']),
+                          ('биоинформатик', False, False, 'Самара', []),
+                          ('менеджер', False, False, 'Воронеж', ['3']),
+                          ('биоинформатик', 50000, 'Нет опыта работы', False, ['1']),
+                          ('биоинформатик', 50000, 'Более 6 лет', False, ['5']),
+                          ('менеджер', 50000, 'Нет опыта работы', False, []),
+                          ('биоинформатик', False, 'От 3 до 6 лет', 'Воронеж', ['4']),
+                          ('менеджер', False, 'От 3 до 6 лет', 'Воронеж', ['3']),
+                          ('биоинформатик', False, 'Нет опыта работы', 'Санкт-Петербург', ['1']),
+                          ('биоинформатик', False, 'От 3 до 6 лет', 'Махачкала', []),
+                          ('биоинформатик', False, False, False, ['1', '2', '4', '5']),
+                          ('менеджер', False, False, False, ['3'])
+                          ])
+def test_get_vacancy_by_keyword_in_title(get_instance_saver, get_file_with_data, arg_1, arg_2, arg_3, arg_4, expected):
+    vac = get_instance_saver.get_vacancy_by_keyword_in_title(arg_1, arg_2, arg_3, arg_4)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
