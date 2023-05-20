@@ -78,3 +78,13 @@ def test_get_vacancies_by_experience(get_instance_saver, get_file_with_data, arg
     for item in vac:
         result.append(item.get('Идентификатор'))
     assert result == expected
+
+
+@pytest.mark.parametrize("arg_1, arg_2, expected", [('От 3 до 6 лет', True, ['4', '3']),
+                                                    ('От 3 до 6 лет', False, ['3', '4'])])
+def test_get_vacancies_by_experience_and_date(get_instance_saver, get_file_with_data, arg_1, arg_2, expected):
+    vac = get_instance_saver.get_vacancies_by_experience(arg_1, arg_2)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
