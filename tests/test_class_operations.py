@@ -118,4 +118,11 @@ def test_vacancy_method__compare__1(vacancies_examples, expected, inner_index, a
         result = vacancies_examples[inner_index] > argument
 
 
+@pytest.mark.parametrize("expected, inner_index, argument", [(ValueError, 2, 10), (ValueError, 3, 15),
+                                                             (ValueError, 4, 20), (ValueError, 1, -100)])
+def test_vacancy_method__compare__2(vacancies_examples, expected, inner_index, argument):
+    with pytest.raises(expected):
+        result = vacancies_examples[inner_index] >= argument
+
+
 
