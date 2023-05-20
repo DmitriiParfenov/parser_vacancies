@@ -171,3 +171,16 @@ def test_get_vacancy_by_experience_salary_and_city(get_instance_saver, get_file_
     for item in vac:
         result.append(item.get('Идентификатор'))
     assert result == expected
+
+
+@pytest.mark.parametrize("arg_1, arg_2, expected", [(10000, 'Санкт-Петербург', ['1', '5']),
+                                                    (200000, 'Воронеж', ['4']),
+                                                    (20000, 'Воронеж', ['4']),
+                                                    (500000, 'Санкт-Петербург', []),
+                                                    (50000, 'Москва', ['2'])])
+def test_get_vacancy_by_salary_and_city(get_instance_saver, get_file_with_data, arg_1, arg_2, expected):
+    vac = get_instance_saver.get_vacancy_by_salary_and_city(arg_1, arg_2)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
