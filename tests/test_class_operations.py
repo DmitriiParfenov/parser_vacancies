@@ -44,7 +44,8 @@ def vacancies_examples():
                            dt(2023, 1, 1)),
                           (TypeError, 1, 'title', 'https://ex.ru', 3, 5, 'name', 'city', 'desc', 'req', 1,
                            dt(2023, 1, 1)),
-                          ])
+                          (TypeError, 1, 'title', 'https://ex.ru', 3, 5, 'name', 'city', 'desc', 'req', 1,
+                           '2020-01-01')])
 def test_vacancy_validate_data_1(id_, title, url, salary_from, salary_to, name, city, desc, req, exp, date, expected):
     with pytest.raises(expected):
         Vacancy(id_, title, url, salary_from, salary_to, name, city, desc, req, exp, date)
