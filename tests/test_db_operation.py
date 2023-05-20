@@ -119,3 +119,15 @@ def test_get_vacancies_by_city_and_date(get_instance_saver, get_file_with_data, 
 def test_get_vacancies_by_city_from_empty_file(get_instance_saver, get_empty_file):
     vac = get_instance_saver.get_vacancies_by_city('москва')
     assert vac == 'В базе данных еще нет ни одной вакансии'
+
+
+@pytest.mark.parametrize("arg_1, arg_2, expected", [(30000, 'Нет опыта работы', ['1']),
+                                                    (150000, 'От 3 до 6 лет', ['4']),
+                                                    (30000, 'От 3 до 6 лет', ['4']),
+                                                    (250000, 'Более 6 лет', ['5'])])
+def test_get_vacancy_by_experience_and_salary(get_instance_saver, get_file_with_data, arg_1, arg_2, expected):
+    vac = get_instance_saver.get_vacancy_by_experience_and_salary(arg_1, arg_2)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
