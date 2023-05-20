@@ -163,7 +163,7 @@ def test_get_vacancy_by_experience_city_and_date(get_instance_saver, get_file_wi
                                                            (100000, 'Более 6 лет', 'санкт-петербург', ['5']),
                                                            (500000, 'Нет опыта работы', 'Воронеж', []),
                                                            (100000, 'От 3 до 6 лет', 'Санкт-Петербург', []),
-                                                           (200000,'От 3 до 6 лет', 'Воронеж', ['4'])])
+                                                           (200000, 'От 3 до 6 лет', 'Воронеж', ['4'])])
 def test_get_vacancy_by_experience_salary_and_city(get_instance_saver, get_file_with_data,
                                                    arg_1, arg_2, arg_3, expected):
     vac = get_instance_saver.get_vacancy_by_experience_salary_and_city(arg_1, arg_2, arg_3)
@@ -180,6 +180,16 @@ def test_get_vacancy_by_experience_salary_and_city(get_instance_saver, get_file_
                                                     (50000, 'Москва', ['2'])])
 def test_get_vacancy_by_salary_and_city(get_instance_saver, get_file_with_data, arg_1, arg_2, expected):
     vac = get_instance_saver.get_vacancy_by_salary_and_city(arg_1, arg_2)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
+
+
+@pytest.mark.parametrize("arg_1, arg_2, arg_3, expected", [(10000, 'Санкт-Петербург', True, ['5', '1']),
+                                                           (10000, 'Санкт-Петербург', False, ['1', '5'])])
+def test_get_vacancy_by_salary_city_and_date(get_instance_saver, get_file_with_data, arg_1, arg_2, arg_3, expected):
+    vac = get_instance_saver.get_vacancy_by_salary_and_city(arg_1, arg_2, arg_3)
     result = list()
     for item in vac:
         result.append(item.get('Идентификатор'))
