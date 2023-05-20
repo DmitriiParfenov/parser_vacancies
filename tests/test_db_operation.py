@@ -45,7 +45,7 @@ def test_unique_data_in_file(get_file_with_two_rows, vacancies_examples, get_ins
 
 @pytest.mark.parametrize("argument, expected", [(30000, ['1', '2', '4', '5']),
                                                 (250000, ['4', '5'])])
-def test_get_vacancies_by_salary(vacancies_examples, get_instance_saver, get_file_with_data, argument, expected):
+def test_get_vacancies_by_salary(get_instance_saver, get_file_with_data, argument, expected):
     vac = get_instance_saver.get_vacancies_by_salary(argument)
     result = list()
     for item in vac:
@@ -56,7 +56,7 @@ def test_get_vacancies_by_salary(vacancies_examples, get_instance_saver, get_fil
 @pytest.mark.parametrize("argument_1, argument_2, expected", [(30000, True, ['5', '4', '2', '1']),
                                                               (250000, True, ['5', '4']),
                                                               (250000, False, ['4', '5'])])
-def test_get_vacancies_by_salary_and_date(vacancies_examples, get_instance_saver, get_file_with_data,
+def test_get_vacancies_by_salary_and_date(get_instance_saver, get_file_with_data,
                                           argument_1, argument_2, expected):
     vac = get_instance_saver.get_vacancies_by_salary(argument_1, argument_2)
     result = list()
@@ -68,3 +68,13 @@ def test_get_vacancies_by_salary_and_date(vacancies_examples, get_instance_saver
 def test_get_vacancies_by_salary_with_no_data(get_instance_saver, get_empty_file):
     vac = get_instance_saver.get_vacancies_by_salary(50000)
     assert vac == 'В базе данных еще нет ни одной вакансии'
+
+
+@pytest.mark.parametrize("argument, expected", [('Нет опыта работы', ['1']), ('Более 6 лет', ['5']),
+                                                ('От 1 года до 3 лет', ['2']), ('От 3 до 6 лет', ['3', '4'])])
+def test_get_vacancies_by_experience(get_instance_saver, get_file_with_data, argument, expected):
+    vac = get_instance_saver.get_vacancies_by_experience(argument)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
