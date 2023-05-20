@@ -96,3 +96,12 @@ def test_vacancy_method__repr__(vacancies_examples):
         "Vacancy(1, 'Биоинформатик', 'https://example1.ru/', 30000, 60000, 'BIOCAD', "
         "'Санкт-Петербург', 'Описание_1', 'Секвенирование','Нет опыта работы', "
         '2023-01-01 00:00:00)')
+
+
+@pytest.mark.parametrize("expected, inner_index, argument", [(ValueError, 0, 10), (ValueError, 1, 15),
+                                                             (ValueError, 4, 20), (ValueError, 2, -100)])
+def test_vacancy_method__eq__1(vacancies_examples, expected, inner_index, argument):
+    with pytest.raises(expected):
+        vacancies_examples[inner_index] == argument
+
+
