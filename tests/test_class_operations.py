@@ -142,3 +142,8 @@ def test_vacancy_method__compare__3(vacancies_examples, index_1, index_2, expect
 def test_vacancy_method__compare__4(vacancies_examples, index_1, index_2, expected):
     assert (vacancies_examples[index_1] < vacancies_examples[index_2]) == expected
 
+
+@pytest.mark.parametrize("index_1, index_2, expected", [(1, 0, False), (4, 0, False), (3, 1, False),
+                                                        (2, 0, True), (1, 1, True), (2, 4, True)])
+def test_vacancy_method__compare__4(vacancies_examples, index_1, index_2, expected):
+    assert (vacancies_examples[index_1] <= vacancies_examples[index_2]) == expected
