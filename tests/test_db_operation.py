@@ -93,3 +93,13 @@ def test_get_vacancies_by_experience_and_date(get_instance_saver, get_file_with_
 def test_get_vacancies_by_experience_from_empty_file(get_instance_saver, get_empty_file):
     vac = get_instance_saver.get_vacancies_by_experience('От 3 до 6 лет')
     assert vac == 'В базе данных еще нет ни одной вакансии'
+
+
+@pytest.mark.parametrize("argument, expected", [('Санкт-Петербург', ['1', '5']), ('Воронеж', ['3', '4']),
+                                                ('Москва', ['2'])])
+def test_get_vacancies_by_city(get_instance_saver, get_file_with_data, argument, expected):
+    vac = get_instance_saver.get_vacancies_by_city(argument)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
