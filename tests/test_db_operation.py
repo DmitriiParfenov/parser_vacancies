@@ -194,3 +194,27 @@ def test_get_vacancy_by_salary_city_and_date(get_instance_saver, get_file_with_d
     for item in vac:
         result.append(item.get('Идентификатор'))
     assert result == expected
+
+
+@pytest.mark.parametrize("arg_1, arg_2, arg_3, expected", [(10000, 'Нет опыта работы', 'Санкт-Петербург', ['1']),
+                                                           (False, 'Нет опыта работы', 'Санкт-Петербург', ['1']),
+                                                           (10000, 'Более 6 лет', 'Санкт-Петербург', ['5']),
+                                                           (10000, False, 'Санкт-Петербург', ['1', '5']),
+                                                           (10000, 'Более 6 лет', False, ['5']),
+                                                           (10000, False, False, ['1', '2', '4', '5']),
+                                                           (100000, False, False, ['2', '4', '5']),
+                                                           (100000, 'Нет опыта работы', 'Москва', []),
+                                                           (False, False, False, ['1', '2', '3', '4', '5']),
+                                                           (False, 'Нет опыта работы', False, ['1']),
+                                                           (False, 'От 3 до 6 лет', False, ['3', '4']),
+                                                           (False, False, 'Санкт-Петербург', ['1', '5']),
+                                                           (False, False, 'Воронеж', ['3', '4']),
+                                                           (False, False, 'Самара', []),
+                                                           ])
+def test_get_vacancy_by_filtered_words_not_in_title(get_instance_saver, get_file_with_data,
+                                                    arg_1, arg_2, arg_3, expected):
+    vac = get_instance_saver.get_vacancy_by_filtered_words_not_in_title(arg_1, arg_2, arg_3)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
