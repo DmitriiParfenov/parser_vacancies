@@ -89,3 +89,10 @@ def test_vacancy_method__str__(vacancies_examples, inner_index, outer_index, exp
     test_object = vacancies_examples[outer_index]
     result = str(test_object).split('\n')
     assert result[inner_index] == expected
+
+
+def test_vacancy_method__repr__(vacancies_examples):
+    assert repr(vacancies_examples[0]) == (
+        "Vacancy(1, 'Биоинформатик', 'https://example1.ru/', 30000, 60000, 'BIOCAD', "
+        "'Санкт-Петербург', 'Описание_1', 'Секвенирование','Нет опыта работы', "
+        '2023-01-01 00:00:00)')
