@@ -33,3 +33,11 @@ def test_check_count_headers(get_file_with_two_rows, vacancies_examples, get_ins
             if item[0] == 'Идентификатор':
                 result += 1
     assert result == 1
+
+
+def test_unique_data_in_file(get_file_with_two_rows, vacancies_examples, get_instance_saver):
+    get_instance_saver.add_vacancy(vacancies_examples[0])
+    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+        reader = csv.reader(file, delimiter='\t')
+        unique = sum([1 for x in reader])
+    assert unique == 2
