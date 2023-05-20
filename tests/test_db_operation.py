@@ -51,3 +51,15 @@ def test_get_vacancies_by_salary(vacancies_examples, get_instance_saver, get_fil
     for item in vac:
         result.append(item.get('Идентификатор'))
     assert result == expected
+
+
+@pytest.mark.parametrize("argument_1, argument_2, expected", [(30000, True, ['5', '4', '2', '1']),
+                                                              (250000, True, ['5', '4']),
+                                                              (250000, False, ['4', '5'])])
+def test_get_vacancies_by_salary_and_date(vacancies_examples, get_instance_saver, get_file_with_data,
+                                          argument_1, argument_2, expected):
+    vac = get_instance_saver.get_vacancies_by_salary(argument_1, argument_2)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
