@@ -48,3 +48,10 @@ def vacancies_examples():
 def test_vacancy_validate_data_1(id_, title, url, salary_from, salary_to, name, city, desc, req, exp, date, expected):
     with pytest.raises(expected):
         Vacancy(id_, title, url, salary_from, salary_to, name, city, desc, req, exp, date)
+
+
+def test_vacancy_validate_data_2(vacancies_examples):
+    result = []
+    for elem in vacancies_examples:
+        result.append(isinstance(elem, Vacancy))
+    assert result == [True, True, True, True, True]
