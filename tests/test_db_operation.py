@@ -286,3 +286,20 @@ def test_get_vacancy_by_keyword_in_title(get_instance_saver, get_file_with_data,
     for item in vac:
         result.append(item.get('Идентификатор'))
     assert result == expected
+
+
+@pytest.mark.parametrize("arg_1, arg_2, arg_3, arg_4, arg_5, expected",
+                         [('биоинформатик', 250000, False, False, False, ['4', '5']),
+                          ('биоинформатик', 250000, False, False, True, ['5', '4']),
+                          ('биоинформатик', 30000, False, 'Санкт-Петербург', True, ['5', '1']),
+                          ('биоинформатик', 30000, False, 'Санкт-Петербург', False, ['1', '5']),
+                          ('биоинформатик', False, False, False, False, ['1', '2', '4', '5']),
+                          ('биоинформатик', False, False, False, True, ['5', '4', '2', '1'])
+                          ])
+def test_get_vacancy_by_keyword_in_title_by_date(get_instance_saver, get_file_with_data,
+                                                 arg_1, arg_2, arg_3, arg_4, arg_5, expected):
+    vac = get_instance_saver.get_vacancy_by_keyword_in_title(arg_1, arg_2, arg_3, arg_4, arg_5)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
