@@ -71,3 +71,21 @@ def test_vacancy_get_url(vacancies_examples):
         result.append(elem.url)
     assert result == ['https://example1.ru/', 'https://example2.ru/', 'https://example3.ru/', 'https://example4.ru/',
                       'https://example5.ru/']
+
+
+@pytest.mark.parametrize("inner_index, outer_index, expected", [(0, 0, 'Идентификатор вакансии — 1'),
+                                                                (1, 1, 'title — Биоинформатик'),
+                                                                (2, 4, 'Ссылка на вакансию — https://example5.ru/'),
+                                                                (3, 2, 'salary_from — None'),
+                                                                (4, 3, 'salary_to — 250000'),
+                                                                (5, 4, 'name_employer — BIOCAD'),
+                                                                (6, 0, 'city — Санкт-Петербург'),
+                                                                (7, 3, 'description — Описание_4'),
+                                                                (8, 1, 'requirement — Программирование'),
+                                                                (9, 1, 'experience — От 1 года до 3 лет'),
+                                                                (10, 4, 'date — 2023-01-05 00:00:00'),
+                                                                ])
+def test_vacancy_method__str__(vacancies_examples, inner_index, outer_index, expected):
+    test_object = vacancies_examples[outer_index]
+    result = str(test_object).split('\n')
+    assert result[inner_index] == expected
