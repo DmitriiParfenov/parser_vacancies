@@ -41,3 +41,13 @@ def test_unique_data_in_file(get_file_with_two_rows, vacancies_examples, get_ins
         reader = csv.reader(file, delimiter='\t')
         unique = sum([1 for x in reader])
     assert unique == 2
+
+
+@pytest.mark.parametrize("argument, expected", [(30000, ['1', '2', '4', '5']),
+                                                (250000, ['4', '5'])])
+def test_get_vacancies_by_salary(vacancies_examples, get_instance_saver, get_file_with_data, argument, expected):
+    vac = get_instance_saver.get_vacancies_by_salary(argument)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
