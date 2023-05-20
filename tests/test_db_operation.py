@@ -20,5 +20,16 @@ def test_add_data_to_empty_file(get_empty_file, get_instance_saver, vacancies_ex
     with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
         reader = csv.reader(file, delimiter='\t')
         data = [row for row in reader]
-        assert data[0] == ['Идентификатор', 'Название_вакансии', 'Ссылка', 'Зарплата_от', 'Зарплата_до',
-                           'Имя_нанимателя', 'Город', 'Описание_вакансии', 'Требование', 'Опыт', 'Дата_публикации']
+    assert data[0] == ['Идентификатор', 'Название_вакансии', 'Ссылка', 'Зарплата_от', 'Зарплата_до',
+                       'Имя_нанимателя', 'Город', 'Описание_вакансии', 'Требование', 'Опыт', 'Дата_публикации']
+
+
+def test_check_count_headers(get_file_with_two_rows, vacancies_examples, get_instance_saver):
+    get_instance_saver.add_vacancy(vacancies_examples[1])
+    result = 0
+    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+        reader = csv.reader(file, delimiter='\t')
+        for item in reader:
+            if item[0] == 'Идентификатор':
+                result += 1
+    assert result == 1
