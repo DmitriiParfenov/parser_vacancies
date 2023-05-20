@@ -47,3 +47,16 @@ def get_file_with_two_rows(vacancies_examples):
                     vacancies_examples[0].city, vacancies_examples[0].description,
                     vacancies_examples[0].requirement, vacancies_examples[0].experience, vacancies_examples[0].date)
         writer.writerow(data_row)
+
+
+@pytest.fixture
+def get_file_with_data(vacancies_examples):
+    with open('db_vacancies.csv', 'w', newline='', encoding='UTF-16') as file:
+        writer = csv.writer(file, delimiter='\t')
+        head_row = ('Идентификатор', 'Название_вакансии', 'Ссылка', 'Зарплата_от', 'Зарплата_до',
+                    'Имя_нанимателя', 'Город', 'Описание_вакансии', 'Требование', 'Опыт', 'Дата_публикации')
+        writer.writerow(head_row)
+        for vac in vacancies_examples:
+            data_row = (vac.id, vac.title, vac.url, vac.salary_from, vac.salary_to, vac.name_employer,
+                        vac.city, vac.description, vac.requirement, vac.experience, vac.date)
+            writer.writerow(data_row)
