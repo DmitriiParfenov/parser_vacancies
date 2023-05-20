@@ -303,3 +303,8 @@ def test_get_vacancy_by_keyword_in_title_by_date(get_instance_saver, get_file_wi
     for item in vac:
         result.append(item.get('Идентификатор'))
     assert result == expected
+
+
+def test_get_vacancy_by_keyword_in_title_from_empty_file(get_instance_saver, get_empty_file):
+    vac = get_instance_saver.get_vacancy_by_keyword_in_title('биоинформатик', 250000, False, False, False)
+    assert vac == 'В базе данных еще нет ни одной вакансии'
