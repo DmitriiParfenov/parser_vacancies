@@ -44,7 +44,7 @@ def test_unique_data_in_file(get_file_with_two_rows, vacancies_examples, get_ins
 
 
 @pytest.mark.parametrize("argument, expected", [(30000, ['1', '2', '4', '5']),
-                                                (250000, ['4', '5'])])
+                                                (250000, ['4', '5']), (500000, [])])
 def test_get_vacancies_by_salary(get_instance_saver, get_file_with_data, argument, expected):
     vac = get_instance_saver.get_vacancies_by_salary(argument)
     result = list()
@@ -96,7 +96,7 @@ def test_get_vacancies_by_experience_from_empty_file(get_instance_saver, get_emp
 
 
 @pytest.mark.parametrize("argument, expected", [('Санкт-Петербург', ['1', '5']), ('Воронеж', ['3', '4']),
-                                                ('москва', ['2'])])
+                                                ('москва', ['2']), ('Самара', [])])
 def test_get_vacancies_by_city(get_instance_saver, get_file_with_data, argument, expected):
     vac = get_instance_saver.get_vacancies_by_city(argument)
     result = list()
@@ -124,9 +124,23 @@ def test_get_vacancies_by_city_from_empty_file(get_instance_saver, get_empty_fil
 @pytest.mark.parametrize("arg_1, arg_2, expected", [(30000, 'Нет опыта работы', ['1']),
                                                     (150000, 'От 3 до 6 лет', ['4']),
                                                     (30000, 'От 3 до 6 лет', ['4']),
-                                                    (250000, 'Более 6 лет', ['5'])])
+                                                    (250000, 'Более 6 лет', ['5']),
+                                                    (100000, 'Нет опыта', [])])
 def test_get_vacancy_by_experience_and_salary(get_instance_saver, get_file_with_data, arg_1, arg_2, expected):
     vac = get_instance_saver.get_vacancy_by_experience_and_salary(arg_1, arg_2)
+    result = list()
+    for item in vac:
+        result.append(item.get('Идентификатор'))
+    assert result == expected
+
+
+@pytest.mark.parametrize("arg_1, arg_2, expected", [('Нет опыта работы', 'Санкт-Петербург', ['1']),
+                                                    ('Более 6 лет', 'санкт-петербург', ['5']),
+                                                    ('Нет опыта работы', 'Воронеж', []),
+                                                    ('От 3 до 6 лет', 'Санкт-Петербург', []),
+                                                    ('От 3 до 6 лет', 'Воронеж', ['3', '4'])])
+def test_get_vacancy_by_experience_and_city(get_instance_saver, get_file_with_data, arg_1, arg_2, expected):
+    vac = get_instance_saver.get_vacancy_by_experience_and_city(arg_1, arg_2)
     result = list()
     for item in vac:
         result.append(item.get('Идентификатор'))
