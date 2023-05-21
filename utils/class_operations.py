@@ -95,3 +95,22 @@ class Vacancy:
         return f"{self.__class__.__name__}({self.id}, '{self.title}', '{self.url}', {self.salary_from}, " \
                f"{self.salary_to}, '{self.name_employer}', '{self.city}', '{self.description}', '{self.requirement}'," \
                f"'{self.experience}', {self.date})"
+
+    def __eq__(self, other):
+        """
+        Метод проверяет, равны ли экземпляры классов Vacancy между собой по среднему значению атрибутов <salary_from>
+        и <salary_to>.
+        """
+        if not issubclass(other.__class__, self.__class__):
+            raise ValueError('Должны сравниваться объекты унаследованных классов')
+        if not self.salary_from:
+            self.salary_from = 0
+        if not self.salary_to:
+            self.salary_to = 0
+        if not other.salary_from:
+            other.salary_from = 0
+        if not other.salary_to:
+            other.salary_to = 0
+        average_salary_1 = (self.salary_from + self.salary_to) // 2
+        average_salary_2 = (other.salary_to + other.salary_from) // 2
+        return average_salary_2 == average_salary_1
