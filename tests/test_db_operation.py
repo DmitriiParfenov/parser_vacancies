@@ -308,3 +308,11 @@ def test_get_vacancy_by_keyword_in_title_by_date(get_instance_saver, get_file_wi
 def test_get_vacancy_by_keyword_in_title_from_empty_file(get_instance_saver, get_empty_file):
     vac = get_instance_saver.get_vacancy_by_keyword_in_title('биоинформатик', 250000, False, False, False)
     assert vac == 'В базе данных еще нет ни одной вакансии'
+
+
+def test_delete_vacancy(get_instance_saver, get_file_with_data, get_single_vacancy):
+    get_instance_saver.delete_vacancy(get_single_vacancy)
+    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+        reader = csv.reader(file, delimiter='\t')
+        count_rows = sum(1 for x in reader)
+    assert count_rows == 5
