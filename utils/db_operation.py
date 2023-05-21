@@ -108,3 +108,12 @@ class CSVSaver(Adder):
             return vacancy_by_city
         else:
             return f'В базе данных еще нет ни одной вакансии'
+
+    @classmethod
+    def get_vacancy_by_experience_and_salary(cls, salary, experience, date=None):
+        """Метод вернет вакансии из csv-файла по фильтру <experience> (опыт работы) и <salary> (зарплата)."""
+
+        vacancies = [x for x in cls.get_vacancies_by_salary(salary) if x in cls.get_vacancies_by_experience(experience)]
+        if date:
+            vacancies.sort(key=lambda x: x['Дата_публикации'], reverse=True)
+        return vacancies
