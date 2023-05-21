@@ -146,3 +146,45 @@ class CSVSaver(Adder):
         if date:
             vacancies.sort(key=lambda x: x['Дата_публикации'], reverse=True)
         return vacancies
+
+    @classmethod
+    def get_vacancy_by_filtered_words_not_in_title(cls, salary=None, experience=None, city=None, date=None):
+        """
+        Метод вернет вакансии по ключевому слову по всей вакансии из csv-файла по заданным фильтрам, указанными
+        в аргументах метода:
+        <salary> (зарплаты) — если указан,
+        <experience> (опыт работы) — если указан,
+        <city> (город) — если указан,
+        <date> (сортировка вывода) — если указан.
+        """
+
+        if os.stat('db_vacancies.csv').st_size > 1:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+                reader = csv.DictReader(file, delimiter='\t')
+                data = [x for x in reader]
+                result_vacancies = []
+                if salary and not experience and not city:
+                    result_vacancies = [x for x in cls.get_vacancies_by_salary(salary) if x in data]
+                elif experience and not salary and not city:
+                    result_vacancies = [x for x in cls.get_vacancies_by_experience(experience) if x in data]
+                elif city and not experience and not salary:
+                    result_vacancies = [x for x in cls.get_vacancies_by_city(city) if x in data]
+                elif salary and city and not experience:
+                    result_vacancies = [x for x in cls.get_vacancy_by_salary_and_city(salary, city) if x in data]
+                elif salary and experience and not city:
+                    result_vacancies = [x for x in cls.get_vacancy_by_experience_and_salary(salary, experience)
+                                        if x in data]
+                elif salary and experience and city:
+                    result_vacancies = [x for x in
+                                        cls.get_vacancy_by_experience_salary_and_city(salary, experience, city)
+                                        if x in data]
+                elif experience and city and not salary:
+                    result_vacancies = [x for x in cls.get_vacancy_by_experience_and_city(experience, city)
+                                        if x in data]
+                elif not salary and not experience and not city:
+                    result_vacancies = data
+                if date:
+                    result_vacancies.sort(key=lambda x: x['Дата_публикации'], reverse=True)
+                return result_vacancies
+        else:
+            return f'В базе данных еще нет ни одной вакансии'
