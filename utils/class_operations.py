@@ -89,3 +89,9 @@ class Vacancy:
             else:
                 result += f'{elem} — {self.__dict__[elem]}\n'
         return result
+
+    def __repr__(self):
+        """Возвращает строку с названием классов и атрибутами при инициализации экземпляров класса."""
+        return f"{self.__class__.__name__}({self.id}, '{self.title}', '{self.url}', {self.salary_from}, " \
+               f"{self.salary_to}, '{self.name_employer}', '{self.city}', '{self.description}', '{self.requirement}'," \
+               f"'{self.experience}', {self.date})"
