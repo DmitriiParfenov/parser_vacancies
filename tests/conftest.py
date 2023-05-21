@@ -60,3 +60,9 @@ def get_file_with_data(vacancies_examples):
             data_row = (vac.id, vac.title, vac.url, vac.salary_from, vac.salary_to, vac.name_employer,
                         vac.city, vac.description, vac.requirement, vac.experience, vac.date)
             writer.writerow(data_row)
+
+
+@pytest.fixture
+def get_single_vacancy():
+    return Vacancy(1, 'Биоинформатик', 'https://example1.ru/', 30000, 60000, 'BIOCAD', 'Санкт-Петербург',
+                   'Описание_1', 'Секвенирование', 'Нет опыта работы', dt(2023, 1, 1))
