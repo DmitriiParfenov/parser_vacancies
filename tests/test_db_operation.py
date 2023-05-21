@@ -341,3 +341,8 @@ def test_delete_all_vacancies_by_keyword(get_instance_saver, get_file_with_data,
 def test_delete_all_vacancies_by_keyword_validate_date(get_instance_saver, get_file_with_data, expected, argument):
     with pytest.raises(expected):
         get_instance_saver.delete_all_vacancies_by_keyword(argument)
+
+
+def test_delete_all_vacancies_by_keyword_from_empty_file(get_instance_saver, get_empty_file):
+    res = get_instance_saver.delete_all_vacancies_by_keyword('биоинформатик')
+    assert res == 'В базе данных еще нет ни одной вакансии'
