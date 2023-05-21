@@ -90,3 +90,21 @@ class CSVSaver(Adder):
             return vacancy_by_experience
         else:
             return f'В базе данных еще нет ни одной вакансии'
+
+    @staticmethod
+    def get_vacancies_by_city(city, date=None):
+        """Метод вернет вакансии из csv-файла по фильтру <city> (город)."""
+
+        if os.stat('db_vacancies.csv').st_size > 1:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+                reader = csv.DictReader(file, delimiter='\t')
+                vacancy_by_city = []
+                data = [x for x in reader if x.get('Город')]
+                for vacancy in data:
+                    if vacancy.get('Город').lower() == city.lower():
+                        vacancy_by_city.append(vacancy)
+            if date:
+                vacancy_by_city.sort(key=lambda x: x['Дата_публикации'], reverse=True)
+            return vacancy_by_city
+        else:
+            return f'В базе данных еще нет ни одной вакансии'
