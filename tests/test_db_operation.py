@@ -326,3 +326,12 @@ def test_delete_vacancy_validate_date(get_instance_saver, get_file_with_data):
 def test_delete_vacancy_from_empty_file(get_instance_saver, get_empty_file, get_single_vacancy):
     res = get_instance_saver.delete_vacancy(get_single_vacancy)
     assert res == 'В базе данных еще нет ни одной вакансии'
+
+
+@pytest.mark.parametrize("argument, expected", [('биоинформатик', 2), ('менеджер', 5)])
+def test_delete_all_vacancies_by_keyword(get_instance_saver, get_file_with_data, argument, expected):
+    get_instance_saver.delete_all_vacancies_by_keyword(argument)
+    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+        reader = csv.reader(file, delimiter='\t')
+        count_rows = sum(1 for x in reader)
+    assert count_rows == expected
