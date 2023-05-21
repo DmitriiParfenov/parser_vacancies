@@ -244,3 +244,24 @@ class CSVSaver(Adder):
                 return result_vacancies
         else:
             return f'В базе данных еще нет ни одной вакансии'
+
+    @staticmethod
+    def delete_vacancy(vacancy):
+        """
+        Метод удаляет из csv-файла вакансию vacancy. Передававаемый аргумент должен быть экземпляром класса Vacancy,
+        иначе возникнет исключение TypeError.
+        """
+        if not isinstance(vacancy, Vacancy):
+            raise TypeError('Передаваемый аргумент должен быть экземпляром класса Vacancy.')
+        if os.stat('db_vacancies.csv').st_size > 1:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+                reader = csv.DictReader(file, delimiter='\t')
+                data = [x for x in reader if x.get('Идентификатор') != str(vacancy.id)]
+            with open('db_vacancies.csv', 'w', newline='', encoding='UTF-16') as file:
+                fieldnames = list(data[0].keys())
+                writer = csv.DictWriter(file, delimiter='\t', fieldnames=fieldnames)
+                writer.writeheader()
+                for elem in data:
+                    writer.writerow(elem)
+        else:
+            return f'В базе данных еще нет ни одной вакансии'
