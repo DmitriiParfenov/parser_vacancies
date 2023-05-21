@@ -321,3 +321,8 @@ def test_delete_vacancy(get_instance_saver, get_file_with_data, get_single_vacan
 def test_delete_vacancy_validate_date(get_instance_saver, get_file_with_data):
     with pytest.raises(TypeError):
         get_instance_saver.delete_vacancy('vacancy')
+
+
+def test_delete_vacancy_from_empty_file(get_instance_saver, get_empty_file, get_single_vacancy):
+    res = get_instance_saver.delete_vacancy(get_single_vacancy)
+    assert res == 'В базе данных еще нет ни одной вакансии'
