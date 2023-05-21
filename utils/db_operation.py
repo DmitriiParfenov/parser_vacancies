@@ -188,3 +188,16 @@ class CSVSaver(Adder):
                 return result_vacancies
         else:
             return f'В базе данных еще нет ни одной вакансии'
+
+    @classmethod
+    def get_vacancy_by_date(cls):
+        """Метод вернет вакансии в отсортированном по дате публикации виде."""
+
+        if os.stat('db_vacancies.csv').st_size > 1:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+                reader = csv.DictReader(file, delimiter='\t')
+                data = [x for x in reader]
+                data.sort(key=lambda x: x['Дата_публикации'], reverse=True)
+            return data
+        else:
+            return f'В базе данных еще нет ни одной вакансии'
