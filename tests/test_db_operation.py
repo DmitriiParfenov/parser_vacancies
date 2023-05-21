@@ -335,3 +335,9 @@ def test_delete_all_vacancies_by_keyword(get_instance_saver, get_file_with_data,
         reader = csv.reader(file, delimiter='\t')
         count_rows = sum(1 for x in reader)
     assert count_rows == expected
+
+
+@pytest.mark.parametrize("expected, argument", [(ValueError, 1), (ValueError, {'a': 1})])
+def test_delete_all_vacancies_by_keyword_validate_date(get_instance_saver, get_file_with_data, expected, argument):
+    with pytest.raises(expected):
+        get_instance_saver.delete_all_vacancies_by_keyword(argument)
