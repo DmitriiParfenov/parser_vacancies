@@ -46,3 +46,29 @@ class CSVSaver(Adder):
                                          vacancy.city, vacancy.description,
                                          vacancy.requirement, vacancy.experience, vacancy.date)
                     writer.writerow(info_from_vacancy)
+
+    @staticmethod
+    def get_vacancies_by_salary(salary_amount, date=None):
+        """Метод вернет те вакансии из csv-файла, у которых диапазон зарплаты включает зарплатные ожидания кандидата."""
+
+        if os.stat('db_vacancies.csv').st_size > 1:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+                reader = csv.DictReader(file, delimiter='\t')
+                vacancy_sorted_by_salary = []
+                data = [x for x in reader if x.get('Зарплата_от') or x.get('Зарплата_до')]
+                for vacancy in data:
+                    if vacancy.get('Зарплата_от') and vacancy.get('Зарплата_до'):
+                        if int(vacancy.get('Зарплата_от')) >= salary_amount or \
+                                salary_amount <= int(vacancy.get('Зарплата_до')):
+                            vacancy_sorted_by_salary.append(vacancy)
+                    elif vacancy.get('Зарплата_от'):
+                        if int(vacancy.get('Зарплата_от')) >= salary_amount:
+                            vacancy_sorted_by_salary.append(vacancy)
+                    elif vacancy.get('Зарплата_до'):
+                        if int(vacancy.get('Зарплата_до')) >= salary_amount:
+                            vacancy_sorted_by_salary.append(vacancy)
+                if date:
+                    vacancy_sorted_by_salary.sort(key=lambda x: x['Дата_публикации'], reverse=True)
+            return vacancy_sorted_by_salary
+        else:
+            return f'В базе данных еще нет ни одной вакансии'
