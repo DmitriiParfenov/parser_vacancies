@@ -67,3 +67,13 @@ class Vacancy:
             raise TypeError('Опыт должен быть строкой или None')
         if not isinstance(date, datetime.datetime):
             raise TypeError('Дата публикация должна быть преобразована в <datetime.datetime>')
+
+    @property
+    def id(self):
+        """Getter возвращает идентификатор вакансии."""
+        return self.__id
+
+    @property
+    def url(self):
+        """Getter возвращает ссылку на вакансию."""
+        return self.__url
