@@ -77,3 +77,15 @@ class Vacancy:
     def url(self):
         """Getter возвращает ссылку на вакансию."""
         return self.__url
+
+    def __str__(self):
+        """Возвращает строку с атрибутами экземпляров в дружественном формате."""
+        result = ''
+        for elem in self.__dict__:
+            if elem == '_Vacancy__id':
+                result += f'Идентификатор вакансии — {self.__dict__[elem]}\n'
+            elif elem == '_Vacancy__url':
+                result += f'Ссылка на вакансию — {self.__dict__[elem]}\n'
+            else:
+                result += f'{elem} — {self.__dict__[elem]}\n'
+        return result
