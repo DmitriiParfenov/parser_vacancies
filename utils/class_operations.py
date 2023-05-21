@@ -133,3 +133,22 @@ class Vacancy:
         average_salary_1 = (self.salary_from + self.salary_to) // 2
         average_salary_2 = (other.salary_to + other.salary_from) // 2
         return average_salary_1 > average_salary_2
+
+    def __ge__(self, other):
+        """
+        Метод проверяет, больше или равен экземпляр класса Vacancy, находящийся слева в аргументах функции, чем
+        экземпляр класса Vacancy, находящийся справа, по среднему значению атрибутов <salary_from> и <salary_to>.
+        """
+        if not issubclass(other.__class__, self.__class__):
+            raise ValueError('Должны сравниваться объекты унаследованных классов')
+        if not self.salary_from:
+            self.salary_from = 0
+        if not self.salary_to:
+            self.salary_to = 0
+        if not other.salary_from:
+            other.salary_from = 0
+        if not other.salary_to:
+            other.salary_to = 0
+        average_salary_1 = (self.salary_from + self.salary_to) // 2
+        average_salary_2 = (other.salary_to + other.salary_from) // 2
+        return average_salary_1 >= average_salary_2
