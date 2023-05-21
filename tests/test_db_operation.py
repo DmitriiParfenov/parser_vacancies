@@ -316,3 +316,8 @@ def test_delete_vacancy(get_instance_saver, get_file_with_data, get_single_vacan
         reader = csv.reader(file, delimiter='\t')
         count_rows = sum(1 for x in reader)
     assert count_rows == 5
+
+
+def test_delete_vacancy_validate_date(get_instance_saver, get_file_with_data):
+    with pytest.raises(TypeError):
+        get_instance_saver.delete_vacancy('vacancy')
