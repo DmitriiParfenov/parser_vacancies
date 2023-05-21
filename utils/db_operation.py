@@ -72,3 +72,21 @@ class CSVSaver(Adder):
             return vacancy_sorted_by_salary
         else:
             return f'В базе данных еще нет ни одной вакансии'
+
+    @staticmethod
+    def get_vacancies_by_experience(experience, date=None):
+        """Метод вернет вакансии из csv-файла по фильтру <experience> (опыт работы)."""
+
+        if os.stat('db_vacancies.csv').st_size > 1:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+                reader = csv.DictReader(file, delimiter='\t')
+                vacancy_by_experience = []
+                data = [x for x in reader if x.get('Опыт')]
+                for vacancy in data:
+                    if vacancy.get('Опыт') == experience:
+                        vacancy_by_experience.append(vacancy)
+            if date:
+                vacancy_by_experience.sort(key=lambda x: x['Дата_публикации'], reverse=True)
+            return vacancy_by_experience
+        else:
+            return f'В базе данных еще нет ни одной вакансии'
