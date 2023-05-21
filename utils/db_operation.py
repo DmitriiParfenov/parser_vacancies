@@ -265,3 +265,23 @@ class CSVSaver(Adder):
                     writer.writerow(elem)
         else:
             return f'В базе данных еще нет ни одной вакансии'
+
+    @staticmethod
+    def delete_all_vacancies_by_keyword(keyword: str):
+        """Метод удаляет из csv-файла все вакансии, в которых содержится передаваемое ключевое слово keyword."""
+
+        if not isinstance(keyword, str):
+            raise ValueError('Ключевое слово должно быть строкой.')
+        if os.stat('db_vacancies.csv').st_size > 1:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+                reader = csv.DictReader(file, delimiter='\t')
+                pattern = f'\\b{keyword.lower()}'
+                data = [x for x in reader if not re.findall(pattern, x['Название_вакансии'].lower())]
+            with open('db_vacancies.csv', 'w', newline='', encoding='UTF-16') as file:
+                fieldnames = list(data[0].keys())
+                writer = csv.DictWriter(file, delimiter='\t', fieldnames=fieldnames)
+                writer.writeheader()
+                for elem in data:
+                    writer.writerow(elem)
+        else:
+            return f'В базе данных еще нет ни одной вакансии'
