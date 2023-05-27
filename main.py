@@ -55,7 +55,7 @@ def user_interaction():
         user_answer_current_city = None
 
     print('Фильтровать вакансии по опыту работы?')
-    print('--------------------------------\n1. Да\n2. Нет')
+    print('-------------------------------------\n1. Да\n2. Нет')
     user_answer_experience = input("Введите выбранный пункт: ")
     if not user_answer_experience.isdigit():
         user_answer_experience = input("Повторно введите выбранный пункт, который должен быть числом: ")
