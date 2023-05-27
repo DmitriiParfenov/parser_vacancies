@@ -9,6 +9,7 @@ packages = [{include = "parser_vacancies"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 isodate = "^0.6.1"
+requests = "^2.31.0"
 
 
 [tool.poetry.group.dev.dependencies]
