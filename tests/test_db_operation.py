@@ -23,7 +23,7 @@ def test_add_incorrect_data_to_file(get_instance_saver, expected, argument):
 def test_add_data_to_empty_file(get_empty_file, get_instance_saver, vacancies_examples):
     """При добавлении вакансии в csv-файл первым столбцом в файле должен быть титульный столбец."""
     get_instance_saver.add_vacancy(vacancies_examples[0])
-    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
         reader = csv.reader(file, delimiter='\t')
         data = [row for row in reader]
     assert data[0] == ['Идентификатор', 'Название_вакансии', 'Ссылка', 'Зарплата_от', 'Зарплата_до',
@@ -34,7 +34,7 @@ def test_check_count_headers(get_file_with_two_rows, vacancies_examples, get_ins
     """В csv-файле должен быть только один титульный столбец."""
     get_instance_saver.add_vacancy(vacancies_examples[1])
     result = 0
-    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
         reader = csv.reader(file, delimiter='\t')
         for item in reader:
             if item[0] == 'Идентификатор':
@@ -45,7 +45,7 @@ def test_check_count_headers(get_file_with_two_rows, vacancies_examples, get_ins
 def test_unique_data_in_file(get_file_with_two_rows, vacancies_examples, get_instance_saver):
     """В csv-файле должны быть только уникальные вакансии."""
     get_instance_saver.add_vacancy(vacancies_examples[0])
-    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
         reader = csv.reader(file, delimiter='\t')
         unique = sum([1 for x in reader])
     assert unique == 2
@@ -376,7 +376,7 @@ def test_get_vacancy_by_keyword_in_title_from_empty_file(get_instance_saver, get
 def test_delete_vacancy(get_instance_saver, get_file_with_data, get_single_vacancy):
     """Метод удаляет переданную в качестве аргумента вакансию из csv-файла."""
     get_instance_saver.delete_vacancy(get_single_vacancy)
-    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
         reader = csv.reader(file, delimiter='\t')
         count_rows = sum(1 for x in reader)
     assert count_rows == 5
@@ -401,7 +401,7 @@ def test_delete_vacancy_from_empty_file(get_instance_saver, get_empty_file, get_
 def test_delete_all_vacancies_by_keyword(get_instance_saver, get_file_with_data, argument, expected):
     """Метод удаляет все вакансии из csv-файла, в названиях которых встречается ключевое слово."""
     get_instance_saver.delete_all_vacancies_by_keyword(argument)
-    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+    with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
         reader = csv.reader(file, delimiter='\t')
         count_rows = sum(1 for x in reader)
     assert count_rows == expected
