@@ -1,8 +1,8 @@
 import json
 import os
 import time
-from datetime import datetime as dt
 
+import isodate
 import requests
 
 from utils.class_operations import Vacancy, Parser
@@ -58,7 +58,7 @@ class HeadHunterAPI(Parser):
                         requirement = item.get('snippet').get('requirement')
                         experience = item.get('experience').get('name')
                         if item.get('published_at'):
-                            date = dt.fromisoformat(item.get('published_at')).replace(tzinfo=None)
+                            date = isodate.parse_datetime(item.get('published_at'))
                         else:
                             date = None
                         self.__db_vacancies.append(Vacancy(id_, title, url, salary_from, salary_to, name_employer,
