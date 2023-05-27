@@ -28,18 +28,18 @@ class CSVSaver(Adder):
 
         if not isinstance(vacancy, Vacancy):
             raise TypeError('Передаваемый аргумент должен быть экземпляром класса Vacancy.')
-        with open('db_vacancies.csv', 'a', newline='', encoding='UTF-16') as file:
+        with open('db_vacancies.csv', 'a', newline='', encoding='UTF-8') as file:
             if os.stat('db_vacancies.csv').st_size == 0:
                 writer = csv.writer(file, delimiter='\t')
                 head_row = ('Идентификатор', 'Название_вакансии', 'Ссылка', 'Зарплата_от', 'Зарплата_до',
                             'Имя_нанимателя', 'Город', 'Описание_вакансии', 'Требование', 'Опыт', 'Дата_публикации')
                 writer.writerow(head_row)
 
-        with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as read_to_file:
+        with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as read_to_file:
             reader = csv.DictReader(read_to_file, delimiter='\t')
             data = [x.get('Ссылка') for x in reader]
             if vacancy.url not in data:
-                with open('db_vacancies.csv', 'a', newline='', encoding='UTF-16') as add_to_file:
+                with open('db_vacancies.csv', 'a', newline='', encoding='UTF-8') as add_to_file:
                     writer = csv.writer(add_to_file, delimiter='\t')
                     info_from_vacancy = (vacancy.id, vacancy.title, vacancy.url, vacancy.salary_from,
                                          vacancy.salary_to, vacancy.name_employer,
@@ -52,7 +52,7 @@ class CSVSaver(Adder):
         """Метод вернет те вакансии из csv-файла, у которых диапазон зарплаты включает зарплатные ожидания кандидата."""
 
         if os.stat('db_vacancies.csv').st_size > 1:
-            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
                 reader = csv.DictReader(file, delimiter='\t')
                 vacancy_sorted_by_salary = []
                 data = [x for x in reader if x.get('Зарплата_от') or x.get('Зарплата_до')]
@@ -78,7 +78,7 @@ class CSVSaver(Adder):
         """Метод вернет вакансии из csv-файла по фильтру <experience> (опыт работы)."""
 
         if os.stat('db_vacancies.csv').st_size > 1:
-            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
                 reader = csv.DictReader(file, delimiter='\t')
                 vacancy_by_experience = []
                 data = [x for x in reader if x.get('Опыт')]
@@ -96,7 +96,7 @@ class CSVSaver(Adder):
         """Метод вернет вакансии из csv-файла по фильтру <city> (город)."""
 
         if os.stat('db_vacancies.csv').st_size > 1:
-            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
                 reader = csv.DictReader(file, delimiter='\t')
                 vacancy_by_city = []
                 data = [x for x in reader if x.get('Город')]
@@ -159,7 +159,7 @@ class CSVSaver(Adder):
         """
 
         if os.stat('db_vacancies.csv').st_size > 1:
-            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
                 reader = csv.DictReader(file, delimiter='\t')
                 data = [x for x in reader]
                 result_vacancies = []
@@ -194,7 +194,7 @@ class CSVSaver(Adder):
         """Метод вернет вакансии в отсортированном по дате публикации виде."""
 
         if os.stat('db_vacancies.csv').st_size > 1:
-            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
                 reader = csv.DictReader(file, delimiter='\t')
                 data = [x for x in reader]
                 data.sort(key=lambda x: x['Дата_публикации'], reverse=True)
@@ -214,7 +214,7 @@ class CSVSaver(Adder):
         """
 
         if os.stat('db_vacancies.csv').st_size > 1:
-            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
                 reader = csv.DictReader(file, delimiter='\t')
                 pattern = f'\\b{keyword.lower()}'
                 data = [x for x in reader if re.findall(pattern, x['Название_вакансии'].lower())]
@@ -254,10 +254,10 @@ class CSVSaver(Adder):
         if not isinstance(vacancy, Vacancy):
             raise TypeError('Передаваемый аргумент должен быть экземпляром класса Vacancy.')
         if os.stat('db_vacancies.csv').st_size > 1:
-            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
                 reader = csv.DictReader(file, delimiter='\t')
                 data = [x for x in reader if x.get('Идентификатор') != str(vacancy.id)]
-            with open('db_vacancies.csv', 'w', newline='', encoding='UTF-16') as file:
+            with open('db_vacancies.csv', 'w', newline='', encoding='UTF-8') as file:
                 fieldnames = list(data[0].keys())
                 writer = csv.DictWriter(file, delimiter='\t', fieldnames=fieldnames)
                 writer.writeheader()
@@ -273,11 +273,11 @@ class CSVSaver(Adder):
         if not isinstance(keyword, str):
             raise ValueError('Ключевое слово должно быть строкой.')
         if os.stat('db_vacancies.csv').st_size > 1:
-            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-16') as file:
+            with open('db_vacancies.csv', 'r', newline='', encoding='UTF-8') as file:
                 reader = csv.DictReader(file, delimiter='\t')
                 pattern = f'\\b{keyword.lower()}'
                 data = [x for x in reader if not re.findall(pattern, x['Название_вакансии'].lower())]
-            with open('db_vacancies.csv', 'w', newline='', encoding='UTF-16') as file:
+            with open('db_vacancies.csv', 'w', newline='', encoding='UTF-8') as file:
                 fieldnames = list(data[0].keys())
                 writer = csv.DictWriter(file, delimiter='\t', fieldnames=fieldnames)
                 writer.writeheader()
