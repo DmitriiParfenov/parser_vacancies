@@ -38,6 +38,7 @@ Parser vacancies — это проект, который с помощью API �
 ```
 git clone git@github.com:DmitriiParfenov/parser_vacancies.git
 python -m venv venv
+venv\Scripts\activate
 pip install poetry
 poetry install
 poetry run python main.py
@@ -48,6 +49,7 @@ poetry run python main.py
 git clone git@github.com:DmitriiParfenov/parser_vacancies.git
 cd parser_vacancies
 python3 -m venv venv
+source venv/bin/activate
 curl -sSL https://install.python-poetry.org | python3
 poetry install
 poetry run python3 main.py
