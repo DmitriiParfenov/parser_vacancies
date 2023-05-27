@@ -34,11 +34,23 @@ Parser vacancies — это проект, который с помощью API �
 В проекте для управления зависимостями используется [poetry](https://python-poetry.org/). </br>
 Выполните в консоли: </br>
 
+Для Windows: </br>
 ```
 git clone git@github.com:DmitriiParfenov/parser_vacancies.git
 python -m venv venv
 pip install poetry
-poetry update
+poetry install
+poetry run python main.py
+```
+
+Для Linux: </br>
+```
+git clone git@github.com:DmitriiParfenov/parser_vacancies.git
+cd parser_vacancies
+python3 -m venv venv
+curl -sSL https://install.python-poetry.org | python3
+poetry install
+poetry run python3 main.py
 ```
 
 # Получение ключей API
