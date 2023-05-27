@@ -30,13 +30,13 @@ def get_instance_saver():
 
 @pytest.fixture
 def get_empty_file():
-    with open('db_vacancies.csv', 'w', newline='', encoding='UTF-16'):
+    with open('db_vacancies.csv', 'w', newline='', encoding='UTF-8'):
         pass
 
 
 @pytest.fixture
 def get_file_with_two_rows(vacancies_examples):
-    with open('db_vacancies.csv', 'w', newline='', encoding='UTF-16') as file:
+    with open('db_vacancies.csv', 'w', newline='', encoding='UTF-8') as file:
         writer = csv.writer(file, delimiter='\t')
         head_row = ('Идентификатор', 'Название_вакансии', 'Ссылка', 'Зарплата_от', 'Зарплата_до',
                     'Имя_нанимателя', 'Город', 'Описание_вакансии', 'Требование', 'Опыт', 'Дата_публикации')
@@ -51,7 +51,7 @@ def get_file_with_two_rows(vacancies_examples):
 
 @pytest.fixture
 def get_file_with_data(vacancies_examples):
-    with open('db_vacancies.csv', 'w', newline='', encoding='UTF-16') as file:
+    with open('db_vacancies.csv', 'w', newline='', encoding='UTF-8') as file:
         writer = csv.writer(file, delimiter='\t')
         head_row = ('Идентификатор', 'Название_вакансии', 'Ссылка', 'Зарплата_от', 'Зарплата_до',
                     'Имя_нанимателя', 'Город', 'Описание_вакансии', 'Требование', 'Опыт', 'Дата_публикации')
