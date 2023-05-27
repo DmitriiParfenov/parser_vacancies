@@ -40,7 +40,7 @@ class Vacancy:
     @staticmethod
     def __validate_data(vacancy_id: int, title: str, url: str, salary_from: int | None, salary_to: int | None,
                         name_employer: str | None, city: str | None, description: str | None, requirement: str | None,
-                        experience: str | None, date: datetime.datetime) -> None:
+                        experience: str | None, date: datetime.datetime | None) -> None:
         """Метод проверяет корректность входных данных при инициализации экземпляров класса Vacancy."""
 
         if not isinstance(vacancy_id, int):
@@ -65,8 +65,8 @@ class Vacancy:
             raise TypeError('Обязанности должны быть строкой или None')
         if not isinstance(experience, str | None):
             raise TypeError('Опыт должен быть строкой или None')
-        if not isinstance(date, datetime.datetime):
-            raise TypeError('Дата публикация должна быть преобразована в <datetime.datetime>')
+        if not isinstance(date, datetime.datetime | None):
+            raise TypeError('Дата публикация должна быть преобразована в <datetime.datetime> или None')
 
     @property
     def id(self):
